@@ -1,0 +1,83 @@
+{% extends "console/base.html" %}
+{% load console_tags %}
+{% block title %}
+邮件通知
+{% endblock %}
+
+{% block container %}
+<h2> 邮件通知 </h2>
+
+<ul id="tab" class="nav nav-tabs">
+  {% for group in group_names%}
+  <li {% ifequal key group %}class="active" {% endifequal %}>
+  <a href="?select_template={{group}}" >
+        <strong> {{group|cut:"EMAIL_"}} </strong> </a></li>
+  {% endfor %}
+</ul>
+
+<form action="/tools/sendmail/" method="post" >
+  <fieldset>
+	<div class="row-fluid">
+      <div class="span2">
+	    <input class="btn-large btn-primary span12" type="submit" name="submit" value="发送"/>
+      </div>
+      {% if result %}
+      <div class="span9">
+        <div class="alert alert-{{result_type}}"> <strong>{{result_type}}: </strong> {{result}} </div>
+      </div>
+      {% endif %}
+    </div>
+	<div class="row-fluid">
+      <div class="control-group span1" style="text-align:right">
+        To:
+      </div>
+      <div class="control-group span10">
+		<textarea id="input" class="input-xlarge span12" rows="2" name="mail_to" readonly="readonly"
+			      title="填写格式可参考下面给出的例子" style="color:grey">{{mail_to}}</textarea>
+      </div>
+    </div>
+
+	<div class="row-fluid">
+      <div class="control-group span1" style="text-align:right">
+        Cc:
+      </div>
+      <div class="control-group span10">
+		<textarea id="input" class="input-xlarge span12" rows="2" name="mail_cc" readonly="readonly"
+			      title="填写格式可参考下面给出的例子" style="color:grey">{{mail_cc}}</textarea>
+      </div>
+    </div>
+
+	<div class="row-fluid">
+      <div class="control-group span1" style="text-align:right">
+        Subject:
+      </div>
+      <div class="control-group span10">
+        <input class="span12" type="text" value="{{mail_subject}}"
+               name="mail_subject">
+      </div>
+    </div>
+
+	<div class="control-group">
+	  <div class="controls">
+		<textarea id="input" class="input-xlarge span12" rows="20" name="mail_message"
+                  title="填写格式可参考下面给出的例子">{{mail_message}}</textarea>
+		<p class="help-block">
+          填写邮件主题(Subject)和邮件内容，点击发送。主要用来做变更通知和软件更新通知。
+          模板的格式可以在<a href="/tools/preference/show/">Preference</a>(Console全局选项设定)中更改。例子如下：<br>
+		</p>
+        <div class="well">
+          <p>From: sinaedge@staff.sina.com.cn<br>
+            To: aa@aa.com,bb@bb.com<br>
+            Cc: cc@cc.com,dd@dd.com<br>
+            Subject:【SinaEdge重大变更】 通知:<br>
+            hello，all：<br>
+            <br>
+              【变更通知】<br>
+		</div>
+
+	  </div>
+	</div>
+  </fieldset>
+</form>
+
+{% endblock %}
