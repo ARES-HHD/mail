@@ -3,6 +3,6 @@
 
 
 # Screenshot
-![Screenshot](https://github.com/ARES-HHD/mail/raw/master/static/image/mail.jpg)
+![Screenshot](https://github.com/ARES-HHD/mail/raw/master/static/image/mail.png)
 
 
